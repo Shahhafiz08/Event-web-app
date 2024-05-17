@@ -1,4 +1,4 @@
-import React, { startTransition, useState } from 'react'
+import React, { startTransition, useEffect, useState } from 'react'
 import {
     Select,
     SelectContent,
@@ -7,6 +7,7 @@ import {
     SelectValue,
   } from "@/components/ui/select"
 import Category, { ICategory } from '@/lib/database/models/category.model'
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -19,6 +20,7 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import { Input } from '../ui/input'
+import { createCategory, getAllCategories } from '@/lib/actions/category.action'
   
   
 type  DrowpdownProps={
@@ -33,8 +35,27 @@ const Dropdown = ({ value,onChangeHandeler}:DrowpdownProps) => {
 const [newCategory,setNewCategory] =useState('');
 
 const handleAddCategory=()=>{
+
+  createCategory({
+    categoryName:newCategory.trim()
+  })
+
+  .then((category) => {
+    setCategories((prevState) => [...prevState,category])
+  })
     
 }
+
+useEffect(()=> {
+  const getCategories = async()=>{
+    const categoryList =await getAllCategories();
+categories && setCategories(categoryList as ICategory[])
+
+  }
+
+  getCategories();
+
+},[])
   return (
 
     
@@ -49,7 +70,7 @@ const handleAddCategory=()=>{
         {category.name}
     </SelectItem>)}
     <AlertDialog>
-  <AlertDialogTrigger className='p-medium-14 flex w-full rounded-sm pl-3 py-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500'>Open</AlertDialogTrigger>
+  <AlertDialogTrigger className='p-medium-14 flex w-full rounded-sm pl-3 py-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500'>Add new category</AlertDialogTrigger>
   <AlertDialogContent className='bg-white'>
     <AlertDialogHeader >
       <AlertDialogTitle>New Category </AlertDialogTitle>
