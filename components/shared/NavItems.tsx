@@ -1,4 +1,4 @@
-'use client'; 
+"use client" 
 
 import { headerLinks } from '@/constants/index'
 import Link from 'next/link'
