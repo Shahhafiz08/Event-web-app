@@ -1,3 +1,5 @@
+
+"use client "
 import React, { startTransition, useEffect, useState } from 'react'
 import {
     Select,
@@ -19,7 +21,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-import { Input } from '../ui/input'
+import { Input } from '@/components/ui/input'
 import { createCategory, getAllCategories } from '@/lib/actions/category.action'
   
   
